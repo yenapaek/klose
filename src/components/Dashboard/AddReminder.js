@@ -111,9 +111,8 @@ export default class AddReminder extends React.Component{
     const formData = new FormData();
     formData.append('userID', `josie1`);
     formData.append('contactName', this.state.newContact);
-    formData.append('file', this.state.newContactImg.uri);
 
-    axios.post('https://kiipgrammar.com/klose/Dashboard/addContact.php', formData, {cancelToken: source.token, header: {'content-type': 'multipart/form-data'}})
+    axios.post('https://kiipgrammar.com/klose/Dashboard/addContact.php', formData)
     .then(res=>{
         this.fetchContacts();
     }).catch(err =>{
@@ -170,9 +169,9 @@ export default class AddReminder extends React.Component{
                       placeholder='Name'
                       style={[styles.textStyle, styles.inputStyle]}
                     />
-                    <UploadImage 
+                    {/* <UploadImage 
                       getImgLink={(e)=>{this.setState({newContactImg: e})}}
-                    />
+                    /> */}
 
                     <View style={styles.buttonRow}>
                       <TouchableOpacity 
