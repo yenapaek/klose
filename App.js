@@ -1,23 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text } from 'react-native';
 import Dashboard from './src/components/Dashboard/Dashboard';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {
+  useFonts,
+  Rubik_400Regular,
+  Rubik_500Medium,
+  Rubik_700Bold,
+} from '@expo-google-fonts/rubik';
 
 export default function App() {
-  return (
-    // <View style={styles.container}>
-    //   <Text>change</Text>
-    //   <StatusBar style="auto" />
-    // </View>
-    <Dashboard />
-  );
-}
+  let [fontsLoaded] = useFonts({
+    Rubik_400Regular,
+    Rubik_500Medium,
+    Rubik_700Bold,
+  });
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
+  if (!fontsLoaded) {
+    return <Text> </Text>
+  } else {
+    return (
+      <GestureHandlerRootView><Dashboard /></GestureHandlerRootView>
+    );
+  }
+  
+}

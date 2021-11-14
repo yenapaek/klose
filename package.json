@@ -10,12 +10,18 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo-google-fonts/fredoka-one": "^0.2.0",
+    "@expo-google-fonts/rubik": "^0.2.0",
+    "@react-native-picker/picker": "2.1.0",
     "axios": "^0.24.0",
     "expo": "~43.0.2",
+    "expo-font": "~10.0.3",
+    "expo-image-picker": "~11.0.3",
     "expo-status-bar": "~1.1.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
+    "react-native-gesture-handler": "~1.10.2",
     "react-native-web": "0.17.1"
   },
   "devDependencies": {

@@ -14,6 +14,8 @@
     $frequency = (!empty($_POST['frequency'])) ? $_POST['frequency'] : null;
     $timezone = (!empty($_POST['timezone'])) ? $_POST['timezone'] : null;
     $reminderTime = (!empty($_POST['reminderTime'])) ? $_POST['reminderTime'] : 0;
+    $type = (!empty($_POST['type'])) ? $_POST['type'] : null;
+    $thisReminderID =(!empty($_POST['reminderID'])) ? $_POST['reminderID'] : 0;
 
     /**
      * Set user timezone as default time/date
@@ -54,7 +56,7 @@
     //  * Insert with stored procedure
     //  */
     $query = $db->prepare("CALL Dashboard_InsertReminder(:thisUser, :thisTitle, :thisContact, :thisMoreInfo, :thisFrequency, 
-    :thisTimezone, :thisNextReminder, :thisStartDate, :thisReminderTime)");
+    :thisTimezone, :thisNextReminder, :thisStartDate, :thisReminderTime, :thisType, :thisReminderID)");
     $query->execute(array(
       "thisUser"=> $userID,
       "thisTitle"=>$title,
@@ -64,7 +66,9 @@
       "thisTimezone"=>$timezone,
       "thisNextReminder"=>$nextReminder->format('Y-m-d H:i:s'),
       "thisStartDate"=>date('Y-m-d'),
-      "thisReminderTime"=>$reminderTime
+      "thisReminderTime"=>$reminderTime,
+      "thisType"=>$thisType,
+      "thisReminderID"=>$thisReminderID
     ));
     $query->closeCursor();
 
