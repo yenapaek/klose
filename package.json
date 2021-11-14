@@ -16,10 +16,6 @@
     "axios": "^0.24.0",
     "expo": "~43.0.2",
     "expo-font": "~10.0.3",
-<<<<<<< HEAD
-=======
-    "expo-notifications": "~0.13.3",
->>>>>>> 868213e8fcb47938853d133221082fec274e7efb
     "expo-status-bar": "~1.1.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
