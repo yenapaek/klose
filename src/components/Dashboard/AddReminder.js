@@ -5,7 +5,7 @@ import {Picker} from '@react-native-picker/picker';
 import { Entypo } from '@expo/vector-icons';
 import { AntDesign  } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
-import UploadImage from '../Hooks/UploadImage';
+import { Feather } from '@expo/vector-icons';
 
 let source = axios.CancelToken.source();
 export default class AddReminder extends React.Component{
@@ -93,7 +93,7 @@ export default class AddReminder extends React.Component{
     formData.append('timezone', Intl.DateTimeFormat().resolvedOptions().timeZone);
     formData.append('reminderTime', this.state.reminderTime);
     formData.append('type', this.props.type);
-    formData.append('reminderID', this.props.reminderID);
+    formData.append('reminderID', this.props.reminderID !== undefined ? this.props.reminderID : '0');
 
     axios.post('https://kiipgrammar.com/klose/Dashboard/addReminder.php', formData, {cancelToken: source.token})
     .then(res=>{
@@ -121,12 +121,31 @@ export default class AddReminder extends React.Component{
    }
 
   render(){
+    if(this.state.submitted){
+      return (
+      <View style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly', backgroundColor: '#e9e1d7', height: '100vh'}}>
+        <Text style={{fontFamily:'Rubik_700Bold', fontSize: 32}}>Reminder Added!</Text>
+        <TouchableOpacity 
+          onPress={this.props.returnDash} 
+          style={[styles.customButton, {backgroundColor: '#e4bb79'}]}
+        >
+          <Feather name="arrow-up-left" size={24} color="black" />
+          <Text style={[styles.buttonText, {color: '#000'}]}>See Reminders</Text>
+        </TouchableOpacity>
+      </View>
+      )
+      
+    } else{
     return(
       <View>
+        {this.props.type !== 'new' ? 
+          <Text style={styles.editTitle}>Editing</Text>
+          : null
+        }
         <View style={styles.reminderItem}>
             <View style={{flexDirection: 'column'}}>
               <View style={styles.eachLabel}>
-                <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.3rem'}}>Title</Text>
+                <Text style={{fontFamily:'Rubik_700Bold', fontSize: 20}}>Title</Text>
                 <TextInput
                   onChangeText={(value)=>{this.handleTextInput(value, 'title')}}
                   defaultValue={this.state.title}
@@ -136,12 +155,12 @@ export default class AddReminder extends React.Component{
               </View>
 
               <View style={styles.eachLabel}>
-                <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.3rem'}}>Who</Text>
+                <Text style={{fontFamily:'Rubik_700Bold', fontSize: 20}}>Who</Text>
                 <Picker
                   selectedValue={this.state.selectedContact}
                   style={styles.picker}
                   onValueChange={(value)=>{this.handleTextInput(value, 'selectedContact')}}
-                  itemStyle={{fontFamily:'Rubik_400Regular', fontSize: '18px'}}
+                  itemStyle={{fontFamily:'Rubik_400Regular', fontSize: 18}}
                 >
                   {this.state.contacts !== null ?
                     this.state.contacts.map((contact, i)=>{
@@ -157,12 +176,12 @@ export default class AddReminder extends React.Component{
                 </Picker>
                 <View style={{flexDirection: 'row', marginTop: '5', alignItems: 'center'}} onClick={()=>{this.setState({addContact: !this.state.addContact})}}>
                   <AntDesign name="caretdown" size={15} color="#db644e" />
-                  <Text style={{fontFamily:'Rubik_400Regular', fontSize: '15px', color: '#db644e', padding: 5}}>Add Someone New?</Text>
+                  <Text style={{fontFamily:'Rubik_400Regular', fontSize: 15, color: '#db644e', padding: 5}}>Add Someone New?</Text>
                 </View>
 
                 {this.state.addContact ? 
                   <View style={styles.eachLabel}>
-                    <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.1rem'}}>New Contact</Text>
+                    <Text style={{fontFamily:'Rubik_700Bold', fontSize: 17}}>New Contact</Text>
                     <TextInput
                       onChangeText={(value)=>{this.handleTextInput(value, 'newContact')}}
                       defaultValue={this.state.newContact}
@@ -192,12 +211,12 @@ export default class AddReminder extends React.Component{
               </View>
 
               <View style={styles.eachLabel}>
-                <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.3rem'}}>How Often</Text>
+                <Text style={{fontFamily:'Rubik_700Bold', fontSize: 20}}>How Often</Text>
                 <Picker
                   selectedValue={this.state.frequency}
                   style={styles.picker}
                   onValueChange={(value)=>{this.handleTextInput(value, 'frequency')}}
-                  itemStyle={{fontFamily:'Rubik_400Regular', fontSize: '18px'}}
+                  itemStyle={{fontFamily:'Rubik_400Regular', fontSize: 18}}
                 >
                   {this.state.frequencyOpts.map((option, i)=>{
                       return (
@@ -205,7 +224,7 @@ export default class AddReminder extends React.Component{
                           label={option} 
                           value={option} 
                           key={`indivFreq${i}`}
-                          style={{fontFamily:'Rubik_400Regular', fontSize: '18px'}}
+                          style={{fontFamily:'Rubik_400Regular', fontSize: 18}}
                         />
                       )
                     })
@@ -214,12 +233,12 @@ export default class AddReminder extends React.Component{
               </View>
 
               <View style={styles.eachLabel}>
-                <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.3rem'}}>When</Text>
+                <Text style={{fontFamily:'Rubik_700Bold', fontSize: 20}}>When</Text>
                 <Picker
                   selectedValue={this.state.reminderTime}
                   style={styles.picker}
                   onValueChange={(value)=>{this.handleTextInput(value, 'reminderTime')}}
-                  itemStyle={{fontFamily:'Rubik_400Regular', fontSize: '18px'}}
+                  itemStyle={{fontFamily:'Rubik_400Regular', fontSize: 18}}
                 >
                   {this.state.timeOpts.map((option, i)=>{
                       return (
@@ -227,7 +246,7 @@ export default class AddReminder extends React.Component{
                           label={option} 
                           value={option} 
                           key={`indivTime${i}`}
-                          style={{fontFamily:'Rubik_400Regular', fontSize: '18px'}}
+                          style={{fontFamily:'Rubik_400Regular', fontSize: 18}}
                         />
                       )
                     })
@@ -236,7 +255,7 @@ export default class AddReminder extends React.Component{
               </View>
 
               <View style={styles.eachLabel}>
-                <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.3rem'}}>Note</Text>
+                <Text style={{fontFamily:'Rubik_700Bold', fontSize: 20}}>Note</Text>
                 <TextInput
                   onChangeText={(value)=>{this.handleTextInput(value, 'moreInfo')}}
                   defaultValue={this.state.moreInfo}
@@ -283,64 +302,77 @@ export default class AddReminder extends React.Component{
         </View>
 
       </View>
-    )
+    ) }
   }
 }
 
 const styles = StyleSheet.create({
   reminderItem: {
-    backgroundColor: 'transparent',
+    backgroundColor: '#e9e1d7',
     flexDirection: 'row',
-    margin: '1rem'
+    padding: 16
   },
   textStyle:{
     fontFamily:'Rubik_400Regular',
-    marginTop: '0.4rem',
-    fontSize: '18px'
+    marginTop: 6,
+    fontSize: 18
   },
   buttonRow: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    marginVertical: '0.3rem',
+    paddingVertical: 5,
+    backgroundColor: '#e9e1d7',
   },
   customButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: '0.45rem',
-    paddingHorizontal: '0.8rem',
+    borderRadius: 7,
+    paddingHorizontal: 13,
   },
   buttonText: {
     fontFamily:'Rubik_500Medium',
-    fontSize: '20px',
-    padding: '0.3rem'
+    fontSize: 20,
+    padding: 5
   },
   eachLabel: {
     width: '100%',
     textAlign: 'left',
-    marginVertical: '0.5rem'
+    marginVertical: 8
   },
   picker: {
     marginTop: 10,
     width: 300,
     padding: 10,
-    backgroundColor: '#78b49b',
-    color: '#fff',
-    borderRadius: '0.25rem',
-    borderWidth: 0,
+    backgroundColor: '#fff',
+    color: '#000',
+    borderColor: '#78b49b',
+    borderRadius: 4,
+    borderWidth: 1,
     fontFamily:'Rubik_400Regular',
-    fontSize: '18px'
+    fontSize: 18
   },
   rightSideRow:{
-    padding: '1rem',
+    padding: 16,
     flex: 1,
     alignItems: 'flex-end',
+    backgroundColor: '#e9e1d7',
   },
   inputStyle: {
-    border: '1px solid #b3cbcb',
-    borderRadius: '0.25rem',
-    paddingHorizontal: '0.3rem',
-    paddingVertical: '0.2rem',
+    borderWidth: 1,
+    borderColor: '#78b49b',
+    borderStyle: 'solid',
+    borderRadius: 4,
+    paddingHorizontal: 5,
+    backgroundColor: '#fff',
+    paddingVertical: 5,
+  },
+  editTitle: {
+    color: '#78b49b', 
+    fontFamily:'Rubik_700Bold', 
+    fontSize: 24, 
+    textAlign: 'center',
+    marginTop: 5
   }
 });

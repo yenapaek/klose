@@ -10,7 +10,9 @@ class ReminderList extends React.Component{
     super(props);
     this.state={
       reminders: null,
-      swiping: false
+      swiping: false,
+      filteredReminders: null,
+      filter: false
     }
     source = axios.CancelToken.source();
   }
@@ -57,22 +59,59 @@ class ReminderList extends React.Component{
     deleteReminder(`josie1`, id);
   }
 
+  filterList = (type) =>{
+    if(type ==='today'){
+      let today = new Date();
+      let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      const filteredReminders = this.state.reminders.filter(item => {
+        let itemDate = item.next_reminder.substring(0, 10);
+        return itemDate === date;
+      });
+
+      this.setState({filteredReminders, filter: true})
+    } else {
+      this.setState({filteredReminders: null, filter: false})
+    }
+  }
+
   render(){
+    let mode = this.state.filter ? this.state.filteredReminders : this.state.reminders;
     return (
       <View style={styles.reminderList}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-evenly', paddingTop: 16}}>
+          <TouchableOpacity 
+            onPress={()=>{this.filterList('all')}} 
+            style={this.state.filter ? { opacity: '0.5'} : null}
+          >
+            <Text style={{fontFamily:'Rubik_700Bold', fontSize: 20, color: '#db644e'}}>All</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            onPress={()=>{this.filterList('today')}} 
+            style={!this.state.filter ? { opacity: '0.5'} : null}
+          >
+            <Text style={{fontFamily:'Rubik_700Bold', fontSize: 20, color: '#78b49b'}}>Today</Text>
+          </TouchableOpacity>
+         
+        </View>
+       
         <ScrollView
           scrollEnabled={!(this.state.swiping)}
           >
           {this.state.reminders === null ? null :
-            this.state.reminders.map((reminder, i)=>{
+            mode.map((reminder, i)=>{
               let nextReminder = reminder.next_reminder;
               let splitReminder = nextReminder.substring(0, 10);
+              let today = new Date();
+              let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+              let upcomingItem = splitReminder === date ? true : false;
 
               return (
                 <ReminderItem 
                   key={`eachReminder${i}`}
                   deleteSwipe={(e)=>{this.deleteItem(e)}}
                   reminderID={reminder.id}
+                  upcomingItem={upcomingItem}
                 >
                   <TouchableOpacity 
                     onPress={()=>{this.props.selectedItem(reminder.id)}} 
@@ -80,12 +119,12 @@ class ReminderList extends React.Component{
                   >
                     <Image
                       source={{uri: reminder.contact_img}}
-                      style={{width: 75, height:75, borderRadius: '0.45rem', marginRight: '1rem'}}
+                      style={{width: 75, height:75, borderRadius: 7, marginRight: 16}}
                     />
                     <View style={{flexDirection: 'column'}}>
-                      <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.3rem'}}>{reminder.title}</Text>
+                      <Text style={{fontFamily:'Rubik_700Bold', fontSize: 20}}>{reminder.title}</Text>
                       <Text style={{fontFamily:'Rubik_400Regular'}}>{reminder.contact_name}</Text>
-                      <Text style={{fontFamily:'Rubik_400Regular'}}>Next Reminder: {splitReminder}</Text>
+                      <Text style={[upcomingItem ? styles.upcomingText : {fontFamily:'Rubik_400Regular'}]}>When: {splitReminder}</Text>
                     </View>
 
 
@@ -109,12 +148,15 @@ export default ReminderList;
 const styles = StyleSheet.create({
   reminderList: {
     backgroundColor: '#e9e1d7',
+    minHeight: '90vh',
+    paddingTop: 50,
   },
   reminderItem: {
     backgroundColor: 'transparent',
     flexDirection: 'row'
   },
-  reminderItemSelect:{
-    border: '1px solid green'
+  upcomingText: {
+    color: '#db644e',
+    fontFamily: 'Rubik_500Medium'
   }
 });

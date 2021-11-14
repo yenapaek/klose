@@ -15,7 +15,7 @@
     $timezone = (!empty($_POST['timezone'])) ? $_POST['timezone'] : null;
     $reminderTime = (!empty($_POST['reminderTime'])) ? $_POST['reminderTime'] : 0;
     $type = (!empty($_POST['type'])) ? $_POST['type'] : null;
-    $thisReminderID =(!empty($_POST['reminderID'])) ? $_POST['reminderID'] : 0;
+    $thisReminderID =(!empty($_POST['reminderID'])) ? $_POST['reminderID']  : 0;
 
     /**
      * Set user timezone as default time/date
@@ -51,7 +51,6 @@
         break;
     }
 
-
     // /**
     //  * Insert with stored procedure
     //  */
@@ -67,10 +66,11 @@
       "thisNextReminder"=>$nextReminder->format('Y-m-d H:i:s'),
       "thisStartDate"=>date('Y-m-d'),
       "thisReminderTime"=>$reminderTime,
-      "thisType"=>$thisType,
+      "thisType"=>$type,
       "thisReminderID"=>$thisReminderID
     ));
     $query->closeCursor();
+
 
   } catch(Throwable $e) { 
     die('Error: ' . $e->getMessage());  
