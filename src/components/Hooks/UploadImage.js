@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {  Image, View, Platform,StyleSheet,TouchableOpacity, Text } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
+// import * as ImagePicker from 'expo-image-picker';
 import { AntDesign } from '@expo/vector-icons';
 
 export default function ImagePickerExample(props) {

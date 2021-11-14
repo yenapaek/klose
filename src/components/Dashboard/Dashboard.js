@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Button} from 'react-native';
+import {View, Button, Pressable, StyleSheet} from 'react-native';
 import ReminderDetail from '../Reminder/ReminderDetail';
 import AddReminder from './AddReminder';
+import LandingView from './LandingView';
 import ReminderList from './ReminderList';
 
 class Dashboard extends React.Component{
@@ -49,7 +50,9 @@ class Dashboard extends React.Component{
     } else {
       return (
         <View>
-          <Button
+          <LandingView />
+          <Pressable
+            style={styles.btn}
             title="+ Add Reminder"
             onPress={()=>{
               this.setState({display: 'addView'})
@@ -62,5 +65,12 @@ class Dashboard extends React.Component{
     } 
   }
 }
+
+const styles = StyleSheet.create({
+  btn: {
+    backgroundColor: "#78b49b",
+    alignItems: "center",
+  },
+})
 
 export default Dashboard;

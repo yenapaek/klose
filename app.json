@@ -28,13 +28,6 @@
     "web": {
       "favicon": "./src/assets/favicon.png"
     },
-    "plugins": [
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "The app accesses your photos to let you add them to your contacts."
-        }
-      ]
-    ]
+    "description": ""
   }
 }
