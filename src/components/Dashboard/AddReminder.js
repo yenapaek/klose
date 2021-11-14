@@ -124,7 +124,7 @@ export default class AddReminder extends React.Component{
     if(this.state.submitted){
       return (
       <View style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly', backgroundColor: '#e9e1d7', height: '100vh'}}>
-        <Text style={{fontFamily:'Rubik_700Bold', fontSize: '2rem'}}>Reminder Added!</Text>
+        <Text style={{fontFamily:'Rubik_700Bold', fontSize: 32}}>Reminder Added!</Text>
         <TouchableOpacity 
           onPress={this.props.returnDash} 
           style={[styles.customButton, {backgroundColor: '#e4bb79'}]}
@@ -145,7 +145,7 @@ export default class AddReminder extends React.Component{
         <View style={styles.reminderItem}>
             <View style={{flexDirection: 'column'}}>
               <View style={styles.eachLabel}>
-                <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.3rem'}}>Title</Text>
+                <Text style={{fontFamily:'Rubik_700Bold', fontSize: 20}}>Title</Text>
                 <TextInput
                   onChangeText={(value)=>{this.handleTextInput(value, 'title')}}
                   defaultValue={this.state.title}
@@ -155,7 +155,7 @@ export default class AddReminder extends React.Component{
               </View>
 
               <View style={styles.eachLabel}>
-                <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.3rem'}}>Who</Text>
+                <Text style={{fontFamily:'Rubik_700Bold', fontSize: 20}}>Who</Text>
                 <Picker
                   selectedValue={this.state.selectedContact}
                   style={styles.picker}
@@ -181,7 +181,7 @@ export default class AddReminder extends React.Component{
 
                 {this.state.addContact ? 
                   <View style={styles.eachLabel}>
-                    <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.1rem'}}>New Contact</Text>
+                    <Text style={{fontFamily:'Rubik_700Bold', fontSize: 17}}>New Contact</Text>
                     <TextInput
                       onChangeText={(value)=>{this.handleTextInput(value, 'newContact')}}
                       defaultValue={this.state.newContact}
@@ -211,7 +211,7 @@ export default class AddReminder extends React.Component{
               </View>
 
               <View style={styles.eachLabel}>
-                <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.3rem'}}>How Often</Text>
+                <Text style={{fontFamily:'Rubik_700Bold', fontSize: 20}}>How Often</Text>
                 <Picker
                   selectedValue={this.state.frequency}
                   style={styles.picker}
@@ -233,7 +233,7 @@ export default class AddReminder extends React.Component{
               </View>
 
               <View style={styles.eachLabel}>
-                <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.3rem'}}>When</Text>
+                <Text style={{fontFamily:'Rubik_700Bold', fontSize: 20}}>When</Text>
                 <Picker
                   selectedValue={this.state.reminderTime}
                   style={styles.picker}
@@ -255,7 +255,7 @@ export default class AddReminder extends React.Component{
               </View>
 
               <View style={styles.eachLabel}>
-                <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.3rem'}}>Note</Text>
+                <Text style={{fontFamily:'Rubik_700Bold', fontSize: 20}}>Note</Text>
                 <TextInput
                   onChangeText={(value)=>{this.handleTextInput(value, 'moreInfo')}}
                   defaultValue={this.state.moreInfo}
@@ -308,65 +308,71 @@ export default class AddReminder extends React.Component{
 
 const styles = StyleSheet.create({
   reminderItem: {
-    backgroundColor: 'transparent',
+    backgroundColor: '#e9e1d7',
     flexDirection: 'row',
-    margin: '1rem'
+    padding: 16
   },
   textStyle:{
     fontFamily:'Rubik_400Regular',
-    marginTop: '0.4rem',
+    marginTop: 6,
     fontSize: 18
   },
   buttonRow: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    marginVertical: '0.3rem',
+    paddingVertical: 5,
+    backgroundColor: '#e9e1d7',
   },
   customButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: '0.45rem',
-    paddingHorizontal: '0.8rem',
+    borderRadius: 7,
+    paddingHorizontal: 13,
   },
   buttonText: {
     fontFamily:'Rubik_500Medium',
     fontSize: 20,
-    padding: '0.3rem'
+    padding: 5
   },
   eachLabel: {
     width: '100%',
     textAlign: 'left',
-    marginVertical: '0.5rem'
+    marginVertical: 8
   },
   picker: {
     marginTop: 10,
     width: 300,
     padding: 10,
-    backgroundColor: '#78b49b',
-    color: '#fff',
-    borderRadius: '0.25rem',
-    borderWidth: 0,
+    backgroundColor: '#fff',
+    color: '#000',
+    borderColor: '#78b49b',
+    borderRadius: 4,
+    borderWidth: 1,
     fontFamily:'Rubik_400Regular',
     fontSize: 18
   },
   rightSideRow:{
-    padding: '1rem',
+    padding: 16,
     flex: 1,
     alignItems: 'flex-end',
+    backgroundColor: '#e9e1d7',
   },
   inputStyle: {
-    border: '1px solid #b3cbcb',
-    borderRadius: '0.25rem',
-    paddingHorizontal: '0.3rem',
-    paddingVertical: '0.2rem',
+    borderWidth: 1,
+    borderColor: '#78b49b',
+    borderStyle: 'solid',
+    borderRadius: 4,
+    paddingHorizontal: 5,
+    backgroundColor: '#fff',
+    paddingVertical: 5,
   },
   editTitle: {
     color: '#78b49b', 
     fontFamily:'Rubik_700Bold', 
-    fontSize: '1.5rem', 
+    fontSize: 24, 
     textAlign: 'center',
-    marginTop: '0.3rem'
+    marginTop: 5
   }
 });

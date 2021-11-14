@@ -78,19 +78,19 @@ class ReminderList extends React.Component{
     let mode = this.state.filter ? this.state.filteredReminders : this.state.reminders;
     return (
       <View style={styles.reminderList}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-evenly', paddingTop: '1rem'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-evenly', paddingTop: 16}}>
           <TouchableOpacity 
             onPress={()=>{this.filterList('all')}} 
             style={this.state.filter ? { opacity: '0.5'} : null}
           >
-            <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.3rem', color: '#db644e'}}>All</Text>
+            <Text style={{fontFamily:'Rubik_700Bold', fontSize: 20, color: '#db644e'}}>All</Text>
           </TouchableOpacity>
 
           <TouchableOpacity 
             onPress={()=>{this.filterList('today')}} 
             style={!this.state.filter ? { opacity: '0.5'} : null}
           >
-            <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.3rem', color: '#78b49b'}}>Today</Text>
+            <Text style={{fontFamily:'Rubik_700Bold', fontSize: 20, color: '#78b49b'}}>Today</Text>
           </TouchableOpacity>
          
         </View>
@@ -102,12 +102,16 @@ class ReminderList extends React.Component{
             mode.map((reminder, i)=>{
               let nextReminder = reminder.next_reminder;
               let splitReminder = nextReminder.substring(0, 10);
+              let today = new Date();
+              let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+              let upcomingItem = splitReminder === date ? true : false;
 
               return (
                 <ReminderItem 
                   key={`eachReminder${i}`}
                   deleteSwipe={(e)=>{this.deleteItem(e)}}
                   reminderID={reminder.id}
+                  upcomingItem={upcomingItem}
                 >
                   <TouchableOpacity 
                     onPress={()=>{this.props.selectedItem(reminder.id)}} 
@@ -115,12 +119,12 @@ class ReminderList extends React.Component{
                   >
                     <Image
                       source={{uri: reminder.contact_img}}
-                      style={{width: 75, height:75, borderRadius: '0.45rem', marginRight: '1rem'}}
+                      style={{width: 75, height:75, borderRadius: 7, marginRight: 16}}
                     />
                     <View style={{flexDirection: 'column'}}>
-                      <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.3rem'}}>{reminder.title}</Text>
+                      <Text style={{fontFamily:'Rubik_700Bold', fontSize: 20}}>{reminder.title}</Text>
                       <Text style={{fontFamily:'Rubik_400Regular'}}>{reminder.contact_name}</Text>
-                      <Text style={{fontFamily:'Rubik_400Regular'}}>Next Reminder: {splitReminder}</Text>
+                      <Text style={[upcomingItem ? styles.upcomingText : {fontFamily:'Rubik_400Regular'}]}>When: {splitReminder}</Text>
                     </View>
 
 
@@ -144,10 +148,15 @@ export default ReminderList;
 const styles = StyleSheet.create({
   reminderList: {
     backgroundColor: '#e9e1d7',
-    minHeight: '50vh'
+    minHeight: '90vh',
+    paddingTop: 50,
   },
   reminderItem: {
     backgroundColor: 'transparent',
     flexDirection: 'row'
+  },
+  upcomingText: {
+    color: '#db644e',
+    fontFamily: 'Rubik_500Medium'
   }
 });

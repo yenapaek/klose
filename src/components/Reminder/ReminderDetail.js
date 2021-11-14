@@ -64,7 +64,7 @@ export default class ReminderDetail extends React.Component{
   render(){
     if(this.state.editing){
       return (
-        <View>
+        <View style={{backgroundColor: '#e9e1d7'}}>
           <AddReminder 
             returnDash={this.props.returnDash}
             type="edit"
@@ -75,14 +75,14 @@ export default class ReminderDetail extends React.Component{
       )
     } else {
       return(
-        <View>
+        <View style={{backgroundColor: '#e9e1d7', paddingVertical: 30, height: '90vh'}}>
           <View style={styles.reminderItem}>
             <Image
               source={{uri: this.state.reminder.contact_img}}
-              style={{width: 100, height:100, borderRadius: '0.45rem', marginRight: '1rem'}}
+              style={{width: 100, height:100, borderRadius: 7, marginRight: 16}}
             />
             <View style={{flexDirection: 'column'}}>
-              <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.3rem'}}>{this.state.reminder.title}</Text>
+              <Text style={{fontFamily:'Rubik_700Bold', fontSize: 20}}>{this.state.reminder.title}</Text>
               <Text style={styles.textStyle}>Who: {this.state.reminder.contact_name}</Text>
               <Text style={styles.textStyle}>When: {this.state.reminder.next_reminder.substring(0, 10)}</Text>
               <Text style={styles.textStyle}>How Often: {this.state.reminder.frequency}</Text>
@@ -91,7 +91,7 @@ export default class ReminderDetail extends React.Component{
           
           <View style={styles.reminderItem}>
             <View style={{flexDirection: 'column'}}>
-              <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.3rem'}}>Notes</Text>
+              <Text style={{fontFamily:'Rubik_700Bold', fontSize: 20}}>Notes</Text>
               <Text style={styles.textStyle}>{this.state.reminder.more_info}</Text>
             </View>
           </View>
@@ -123,31 +123,31 @@ export default class ReminderDetail extends React.Component{
 
 const styles = StyleSheet.create({
   reminderItem: {
-    backgroundColor: 'transparent',
     flexDirection: 'row',
-    margin: '1rem'
+    margin: 16
   },
   textStyle:{
     fontFamily:'Rubik_400Regular',
-    marginTop: '0.4rem',
+    marginTop: 6,
     fontSize: 18
   },
   buttonRow: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
+    alignItems: 'center'
   },
   customButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: '0.45rem',
-    paddingHorizontal: '0.8rem',
+    borderRadius: 7,
+    paddingHorizontal: 13,
   },
   buttonText: {
     fontFamily:'Rubik_500Medium',
     fontSize: 20,
-    padding: '0.3rem'
+    padding: 5
   },
 
 });

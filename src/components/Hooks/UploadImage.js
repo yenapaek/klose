@@ -34,7 +34,7 @@ export default function ImagePickerExample(props) {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: '0.3rem' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 5 }}>
       <TouchableOpacity 
         onPress={pickImage} 
         style={[styles.customButton, {backgroundColor: '#b3cbcb'}]}
@@ -52,13 +52,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: '0.45rem',
-    paddingHorizontal: '0.8rem',
+    borderRadius: 7,
+    paddingHorizontal: 13,
   },
   buttonText: {
     fontFamily:'Rubik_500Medium',
     fontSize: 15,
-    padding: '0.3rem'
+    padding: 5
   },
 
 

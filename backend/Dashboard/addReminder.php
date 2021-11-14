@@ -51,14 +51,6 @@
         break;
     }
 
-    /**
-     * Catch undefined props issue
-     */
-    if($thisReminderID == 'undefined'){
-      $thisReminderID = '0';
-    }
-    
-
     // /**
     //  * Insert with stored procedure
     //  */

@@ -47,7 +47,7 @@ export default class ReminderItem extends Component {
         friction={2}
         rightThreshold={41}
         renderRightActions={this.renderRightActions}
-        containerStyle={styles.swipeable}
+        containerStyle={this.props.upcomingItem  ? [styles.swipeable, styles.upcomingItem ] : styles.swipeable}
       >
         {children}
       </Swipeable>
@@ -70,9 +70,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     width: '90%',
-    padding: '1rem',
-    marginVertical: '1rem',
-    marginHorizontal: '1rem',
-    borderRadius: '0.45rem'
+    padding: 16,
+    marginVertical: 16,
+    marginHorizontal: 16,
+    borderRadius: 7
+  },
+  upcomingItem:{
+    shadowColor: '#db644e',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
   }
 });
