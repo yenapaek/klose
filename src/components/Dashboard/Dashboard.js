@@ -22,33 +22,35 @@ class Dashboard extends React.Component{
       return (
         <View>
         <Button
-          title="<"
-          onPress={()=>{
-            this.setState({display: false})
-          }}
+          title="< New Reminder"
+          onPress={()=>{this.setState({display: false})}}
           accessibilityLabel="Return to Dashboard"
         />
-        <AddReminder />
+        <AddReminder 
+          returnDash={()=>{this.setState({display: false})}}
+          type="new"
+        />
       </View>
       )
     } else if(this.state.display === 'detailView'){
       return (
         <View>
           <Button
-            title="<"
-            onPress={()=>{
-              this.setState({display: false})
-            }}
+            title="< Reminder Detail"
+            onPress={()=>{this.setState({display: false})}}
             accessibilityLabel="Return to Dashboard"
           />
-          <ReminderDetail selectedItemID={this.state.selectedItemID}/>
+          <ReminderDetail 
+            selectedItemID={this.state.selectedItemID} 
+            returnDash={()=>{this.setState({display: false})}}
+          />
         </View>
       )
     } else {
       return (
         <View>
           <Button
-            title="+"
+            title="+ Add Reminder"
             onPress={()=>{
               this.setState({display: 'addView'})
             }}
