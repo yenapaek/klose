@@ -51,7 +51,7 @@ class Dashboard extends React.Component{
       return (
         <View>
           <LandingView />
-          <Pressable
+          {/* <Button
             style={styles.btn}
             title="+ Add Reminder"
             onPress={()=>{
@@ -59,7 +59,7 @@ class Dashboard extends React.Component{
             }}
             accessibilityLabel="Add a new reminder"
           />
-          <ReminderList selectedItem={(e)=>{this.selectedItem(e)}}/>
+          <ReminderList selectedItem={(e)=>{this.selectedItem(e)}}/> */}
         </View>
       )
     } 
