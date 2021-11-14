@@ -5,16 +5,20 @@ import {Picker} from '@react-native-picker/picker';
 import { Entypo } from '@expo/vector-icons';
 import { AntDesign  } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import UploadImage from '../Hooks/UploadImage';
 
 let source = axios.CancelToken.source();
 export default class AddReminder extends React.Component{
   constructor(props){
     super(props);
     this.state={
+      addContact: false,
       contacts: null,
       frequency: 'Weekly',
       frequencyOpts: ['Daily', 'Weekly', 'Monthly', 'Yearly'],
       moreInfo: '',
+      newContact: '',
+      newContactImg: null,
       reminderTime: '09:00',
       selectedContact: '',
       submitted: null,
@@ -48,13 +52,17 @@ export default class AddReminder extends React.Component{
 
   /**
    * Fetch all the contacts for this user
+   * Preset the selectedContact depending on if editing / added new user
    */
   fetchContacts = ()=>{ 
     const formData = new FormData();
     formData.append('userID', `josie1`); 
     axios.post('https://kiipgrammar.com/klose/Dashboard/fetchContacts.php', formData, {cancelToken: source.token})
     .then(res=>{
-      let selectedContact = this.props.type === 'new' ? res.data[0].id : this.props.existingText.id;
+      let selectedContact = this.props.type === 'new' ? 
+        this.state.newContact !== '' ?  res.data[res.data.length-1].id : res.data[0].id 
+        : this.props.existingText.id;
+
       this.setState({contacts: res.data, selectedContact});
     }).catch(err =>{
       console.log('Error!',err);
@@ -95,6 +103,24 @@ export default class AddReminder extends React.Component{
     })
   }
 
+  /**
+   * Add new contact
+   * @returns 
+   */
+   addNewContact = () => {
+    const formData = new FormData();
+    formData.append('userID', `josie1`);
+    formData.append('contactName', this.state.newContact);
+    formData.append('file', this.state.newContactImg.uri);
+
+    axios.post('https://kiipgrammar.com/klose/Dashboard/addContact.php', formData, {cancelToken: source.token, header: {'content-type': 'multipart/form-data'}})
+    .then(res=>{
+        this.fetchContacts();
+    }).catch(err =>{
+      console.log('Error!',err);
+    })
+   }
+
   render(){
     return(
       <View>
@@ -125,12 +151,45 @@ export default class AddReminder extends React.Component{
                           label={contact.contact_name} 
                           value={contact.id} 
                           key={`indivContact${i}`}
-                          
                         />
                       )
                     }) : null
                   }
                 </Picker>
+                <View style={{flexDirection: 'row', marginTop: '5', alignItems: 'center'}} onClick={()=>{this.setState({addContact: !this.state.addContact})}}>
+                  <AntDesign name="caretdown" size={15} color="#db644e" />
+                  <Text style={{fontFamily:'Rubik_400Regular', fontSize: '15px', color: '#db644e', padding: 5}}>Add Someone New?</Text>
+                </View>
+
+                {this.state.addContact ? 
+                  <View style={styles.eachLabel}>
+                    <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.1rem'}}>New Contact</Text>
+                    <TextInput
+                      onChangeText={(value)=>{this.handleTextInput(value, 'newContact')}}
+                      defaultValue={this.state.newContact}
+                      placeholder='Name'
+                      style={[styles.textStyle, styles.inputStyle]}
+                    />
+                    <UploadImage 
+                      getImgLink={(e)=>{this.setState({newContactImg: e})}}
+                    />
+
+                    <View style={styles.buttonRow}>
+                      <TouchableOpacity 
+                        onPress={this.addNewContact} 
+                        style={[styles.customButton, {backgroundColor: '#e4bb79'}]}
+                      >
+                        <Entypo name="plus" size={24} color="#000" />
+                        <Text style={[styles.buttonText, {color: '#000'}]}>Save Contact</Text>
+                      </TouchableOpacity>
+                    </View>
+
+
+                  </View>
+                : null
+                }
+
+                
               </View>
 
               <View style={styles.eachLabel}>
@@ -243,7 +302,8 @@ const styles = StyleSheet.create({
   buttonRow: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
+    marginVertical: '0.3rem',
   },
   customButton: {
     flexDirection: 'row',
