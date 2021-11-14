@@ -160,7 +160,7 @@ export default class AddReminder extends React.Component{
                   selectedValue={this.state.selectedContact}
                   style={styles.picker}
                   onValueChange={(value)=>{this.handleTextInput(value, 'selectedContact')}}
-                  itemStyle={{fontFamily:'Rubik_400Regular', fontSize: '18px'}}
+                  itemStyle={{fontFamily:'Rubik_400Regular', fontSize: 18}}
                 >
                   {this.state.contacts !== null ?
                     this.state.contacts.map((contact, i)=>{
@@ -176,7 +176,7 @@ export default class AddReminder extends React.Component{
                 </Picker>
                 <View style={{flexDirection: 'row', marginTop: '5', alignItems: 'center'}} onClick={()=>{this.setState({addContact: !this.state.addContact})}}>
                   <AntDesign name="caretdown" size={15} color="#db644e" />
-                  <Text style={{fontFamily:'Rubik_400Regular', fontSize: '15px', color: '#db644e', padding: 5}}>Add Someone New?</Text>
+                  <Text style={{fontFamily:'Rubik_400Regular', fontSize: 15, color: '#db644e', padding: 5}}>Add Someone New?</Text>
                 </View>
 
                 {this.state.addContact ? 
@@ -216,7 +216,7 @@ export default class AddReminder extends React.Component{
                   selectedValue={this.state.frequency}
                   style={styles.picker}
                   onValueChange={(value)=>{this.handleTextInput(value, 'frequency')}}
-                  itemStyle={{fontFamily:'Rubik_400Regular', fontSize: '18px'}}
+                  itemStyle={{fontFamily:'Rubik_400Regular', fontSize: 18}}
                 >
                   {this.state.frequencyOpts.map((option, i)=>{
                       return (
@@ -224,7 +224,7 @@ export default class AddReminder extends React.Component{
                           label={option} 
                           value={option} 
                           key={`indivFreq${i}`}
-                          style={{fontFamily:'Rubik_400Regular', fontSize: '18px'}}
+                          style={{fontFamily:'Rubik_400Regular', fontSize: 18}}
                         />
                       )
                     })
@@ -238,7 +238,7 @@ export default class AddReminder extends React.Component{
                   selectedValue={this.state.reminderTime}
                   style={styles.picker}
                   onValueChange={(value)=>{this.handleTextInput(value, 'reminderTime')}}
-                  itemStyle={{fontFamily:'Rubik_400Regular', fontSize: '18px'}}
+                  itemStyle={{fontFamily:'Rubik_400Regular', fontSize: 18}}
                 >
                   {this.state.timeOpts.map((option, i)=>{
                       return (
@@ -246,7 +246,7 @@ export default class AddReminder extends React.Component{
                           label={option} 
                           value={option} 
                           key={`indivTime${i}`}
-                          style={{fontFamily:'Rubik_400Regular', fontSize: '18px'}}
+                          style={{fontFamily:'Rubik_400Regular', fontSize: 18}}
                         />
                       )
                     })
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
   textStyle:{
     fontFamily:'Rubik_400Regular',
     marginTop: '0.4rem',
-    fontSize: '18px'
+    fontSize: 18
   },
   buttonRow: {
     flex: 1,
@@ -332,7 +332,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontFamily:'Rubik_500Medium',
-    fontSize: '20px',
+    fontSize: 20,
     padding: '0.3rem'
   },
   eachLabel: {
@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
     borderRadius: '0.25rem',
     borderWidth: 0,
     fontFamily:'Rubik_400Regular',
-    fontSize: '18px'
+    fontSize: 18
   },
   rightSideRow:{
     padding: '1rem',

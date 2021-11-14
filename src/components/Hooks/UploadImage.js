@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontFamily:'Rubik_500Medium',
-    fontSize: '15px',
+    fontSize: 15,
     padding: '0.3rem'
   },
 

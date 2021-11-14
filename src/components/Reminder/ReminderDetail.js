@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   textStyle:{
     fontFamily:'Rubik_400Regular',
     marginTop: '0.4rem',
-    fontSize: '18px'
+    fontSize: 18
   },
   buttonRow: {
     flex: 1,
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontFamily:'Rubik_500Medium',
-    fontSize: '20px',
+    fontSize: 20,
     padding: '0.3rem'
   },
 

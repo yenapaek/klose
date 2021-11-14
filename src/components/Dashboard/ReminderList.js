@@ -149,8 +149,5 @@ const styles = StyleSheet.create({
   reminderItem: {
     backgroundColor: 'transparent',
     flexDirection: 'row'
-  },
-  reminderItemSelect:{
-    border: '1px solid green'
   }
 });

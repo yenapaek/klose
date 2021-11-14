@@ -17,7 +17,7 @@ export default class ReminderItem extends Component {
     return (
       <RectButton style={styles.rightAction} onPress={this.closeSwipe}>
         <View accessible accessibilityRole="button">
-          <Text style={{color: '#db644e', fontFamily:'Rubik_500Medium', fontSize: '20px'}}>Delete</Text>
+          <Text style={{color: '#db644e', fontFamily:'Rubik_500Medium', fontSize: 20}}>Delete</Text>
         </View>
         <AnimatedIcon
           name="delete"
