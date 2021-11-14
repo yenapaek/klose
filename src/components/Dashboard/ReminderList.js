@@ -10,7 +10,9 @@ class ReminderList extends React.Component{
     super(props);
     this.state={
       reminders: null,
-      swiping: false
+      swiping: false,
+      filteredReminders: null,
+      filter: false
     }
     source = axios.CancelToken.source();
   }
@@ -57,14 +59,47 @@ class ReminderList extends React.Component{
     deleteReminder(`josie1`, id);
   }
 
+  filterList = (type) =>{
+    if(type ==='today'){
+      let today = new Date();
+      let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      const filteredReminders = this.state.reminders.filter(item => {
+        let itemDate = item.next_reminder.substring(0, 10);
+        return itemDate === date;
+      });
+
+      this.setState({filteredReminders, filter: true})
+    } else {
+      this.setState({filteredReminders: null, filter: false})
+    }
+  }
+
   render(){
+    let mode = this.state.filter ? this.state.filteredReminders : this.state.reminders;
     return (
       <View style={styles.reminderList}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-evenly', paddingTop: '1rem'}}>
+          <TouchableOpacity 
+            onPress={()=>{this.filterList('all')}} 
+            style={this.state.filter ? { opacity: '0.5'} : null}
+          >
+            <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.3rem', color: '#db644e'}}>All</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            onPress={()=>{this.filterList('today')}} 
+            style={!this.state.filter ? { opacity: '0.5'} : null}
+          >
+            <Text style={{fontFamily:'Rubik_700Bold', fontSize: '1.3rem', color: '#78b49b'}}>Today</Text>
+          </TouchableOpacity>
+         
+        </View>
+       
         <ScrollView
           scrollEnabled={!(this.state.swiping)}
           >
           {this.state.reminders === null ? null :
-            this.state.reminders.map((reminder, i)=>{
+            mode.map((reminder, i)=>{
               let nextReminder = reminder.next_reminder;
               let splitReminder = nextReminder.substring(0, 10);
 
@@ -109,6 +144,7 @@ export default ReminderList;
 const styles = StyleSheet.create({
   reminderList: {
     backgroundColor: '#e9e1d7',
+    minHeight: '50vh'
   },
   reminderItem: {
     backgroundColor: 'transparent',

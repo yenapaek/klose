@@ -5,7 +5,7 @@ import {Picker} from '@react-native-picker/picker';
 import { Entypo } from '@expo/vector-icons';
 import { AntDesign  } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
-import UploadImage from '../Hooks/UploadImage';
+import { Feather } from '@expo/vector-icons';
 
 let source = axios.CancelToken.source();
 export default class AddReminder extends React.Component{
@@ -93,7 +93,7 @@ export default class AddReminder extends React.Component{
     formData.append('timezone', Intl.DateTimeFormat().resolvedOptions().timeZone);
     formData.append('reminderTime', this.state.reminderTime);
     formData.append('type', this.props.type);
-    formData.append('reminderID', this.props.reminderID);
+    formData.append('reminderID', this.props.reminderID !== undefined ? this.props.reminderID : '0');
 
     axios.post('https://kiipgrammar.com/klose/Dashboard/addReminder.php', formData, {cancelToken: source.token})
     .then(res=>{
@@ -121,8 +121,27 @@ export default class AddReminder extends React.Component{
    }
 
   render(){
+    if(this.state.submitted){
+      return (
+      <View style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly', backgroundColor: '#e9e1d7', height: '100vh'}}>
+        <Text style={{fontFamily:'Rubik_700Bold', fontSize: '2rem'}}>Reminder Added!</Text>
+        <TouchableOpacity 
+          onPress={this.props.returnDash} 
+          style={[styles.customButton, {backgroundColor: '#e4bb79'}]}
+        >
+          <Feather name="arrow-up-left" size={24} color="black" />
+          <Text style={[styles.buttonText, {color: '#000'}]}>See Reminders</Text>
+        </TouchableOpacity>
+      </View>
+      )
+      
+    } else{
     return(
       <View>
+        {this.props.type !== 'new' ? 
+          <Text style={styles.editTitle}>Editing</Text>
+          : null
+        }
         <View style={styles.reminderItem}>
             <View style={{flexDirection: 'column'}}>
               <View style={styles.eachLabel}>
@@ -283,7 +302,7 @@ export default class AddReminder extends React.Component{
         </View>
 
       </View>
-    )
+    ) }
   }
 }
 
@@ -342,5 +361,12 @@ const styles = StyleSheet.create({
     borderRadius: '0.25rem',
     paddingHorizontal: '0.3rem',
     paddingVertical: '0.2rem',
+  },
+  editTitle: {
+    color: '#78b49b', 
+    fontFamily:'Rubik_700Bold', 
+    fontSize: '1.5rem', 
+    textAlign: 'center',
+    marginTop: '0.3rem'
   }
 });

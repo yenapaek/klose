@@ -65,7 +65,6 @@ export default class ReminderDetail extends React.Component{
     if(this.state.editing){
       return (
         <View>
-          <Text style={styles.editTitle}>Editing</Text>
           <AddReminder 
             returnDash={this.props.returnDash}
             type="edit"
@@ -150,11 +149,5 @@ const styles = StyleSheet.create({
     fontSize: '20px',
     padding: '0.3rem'
   },
-  editTitle: {
-    color: '#78b49b', 
-    fontFamily:'Rubik_700Bold', 
-    fontSize: '1.5rem', 
-    textAlign: 'center',
-    marginTop: '0.3rem'
-  }
+
 });
